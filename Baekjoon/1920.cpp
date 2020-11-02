@@ -11,7 +11,7 @@ int main(void)
     cin >> n;
     for (int i = 0; i < n; i++)
     {
-
+        df
     }
     cin >> m;
 
