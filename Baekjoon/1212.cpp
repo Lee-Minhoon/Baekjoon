@@ -1,18 +1,37 @@
 #include<iostream>
+#include<vector>
 
 using namespace std;
 
 int main(void)
 {
-    int o, d, n = 0;
+    vector<int> binary;
+    vector<int>::reverse_iterator iter;
+    int o = 0, d = 0;
     int factor = 1;
+    int digit = 1;
     
-    scanf("%o", &o);
+    cin >> o;
 
-    printf("%d", o);
+    while (o >= factor) {
+        d += (o / factor % 10 * digit);
+        factor *= 10;
+        digit *= 8;
+    }
 
-    while (true) {
-        d += (o / factor) % 10
+    cout << d << endl;
+
+    factor = 1;
+    digit = 0;
+    while (d >= factor) {
+        cout << factor << " : " << ((d >> digit) & 1) << endl;
+        binary.push_back((d >> digit) & 1);
+        factor *= 2;
+        digit++;
+    }
+
+    for (iter = binary.rbegin(); iter != binary.rend(); iter++) {
+        cout << *iter;
     }
 
     return 0;
