@@ -7,7 +7,6 @@ using namespace std;
 
 int n, m;
 int res[SIZE];
-bool visited[SIZE];
 
 void dfs(int cnt)
 {

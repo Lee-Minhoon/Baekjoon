@@ -34,6 +34,6 @@ int main(void)
     cin >> n >> m;
 
     dfs(0);
-    
+
     return 0;
 }
