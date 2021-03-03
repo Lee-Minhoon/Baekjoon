@@ -14,8 +14,8 @@ public:
 	void push(int n);
 	int pop();
 	int size();
-	bool empty();
 	bool full();
+	bool empty();
 	int top();
 };
 
@@ -36,15 +36,15 @@ int Stack::size()
 	return index;
 }
 
-bool Stack::empty()
-{
-	if (index == 0) return true;
-	else return false;
-}
-
 bool Stack::full()
 {
 	if (index == SIZE) return true;
+	else return false;
+}
+
+bool Stack::empty()
+{
+	if (index == 0) return true;
 	else return false;
 }
 
