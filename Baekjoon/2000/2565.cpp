@@ -17,11 +17,11 @@ bool cmp(pair<int, int> a, pair<int, int> b)
 int main(void)
 {
     int N; cin >> N;
-    
+
     for (int i = 1; i <= N; i++) {
         cin >> input[i].first >> input[i].second;
     }
-    
+
     sort(input + 1, input + 1 + N, cmp);
 
     for (int i = 1; i <= N; i++) {
