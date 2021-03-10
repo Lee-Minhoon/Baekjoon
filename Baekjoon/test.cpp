@@ -1,30 +1,65 @@
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cmath>
 
 using namespace std;
 
-void pick(int n, vector<int>& picked, int toPick)
+int Compare(const void* num1, const void* num2)
 {
-    if (toPick == 0) {
-        for (vector<int>::iterator it = picked.begin(); it < picked.end(); it++) {
-            cout << *it << " ";
+    int a = *(int*)num1;
+    int b = *(int*)num2;
+    unsigned int Asize = to_string(a).size() - 1;
+    unsigned int Bsize = to_string(b).size() - 1;
+    while (true)
+    {
+        if (a / pow(10, Asize) > b / pow(10, Bsize))
+            return -1;
+        else if (a / pow(10, Asize) < b / pow(10, Bsize))
+            return 1;
+        else
+        {
+            if (Asize == 0 && Bsize == 0)
+                return 0;
+            if (Asize > 0)
+            {
+                a = a % (int)pow(10, Asize);
+                Asize--;
+            }
+            if (Bsize > 0)
+            {
+                b = b % (int)pow(10, Bsize);
+                Bsize--;
+            }
         }
-        cout << endl;
-    }
-    int smallest = picked.empty() ? 1 : picked.back() + 1;
-    for (int next = smallest; next <= n; ++next) {
-        picked.push_back(next);
-        pick(n, picked, toPick - 1);
-        picked.pop_back();
     }
 }
 
-int main(void)
+string solution(vector<int> numbers) {
+    for (int i = numbers.size() - 1; i > 0; i--) {
+        for (int j = 0; j < i; j++) {
+            qsort(&numbers[0], numbers.size(), sizeof(int), Compare);
+        }
+    }
+
+
+    string answer = "";
+    if (numbers[0] == 0)
+        answer = "0";
+    else {
+        for (int number : numbers)
+            answer += to_string(number);
+    }
+    return answer;
+}
+
+int main()
 {
-    int n, m; cin >> n >> m;
-    vector<int> nums;
-
-    pick(n, nums, m);
-
+    int t; cin >> t;
+    vector<int> nums(t);
+    for (int i = 0; i < t; i++) {
+        cin >> nums[i];
+    }
+    solution(nums);
     return 0;
 }
