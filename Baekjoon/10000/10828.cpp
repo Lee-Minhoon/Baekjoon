@@ -79,6 +79,6 @@ int main(void)
 			cout << stack.top() << endl;
 		}
 	}
-	
-    return 0;
+
+	return 0;
 }
