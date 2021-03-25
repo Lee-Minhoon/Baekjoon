@@ -2,24 +2,13 @@
 
 using namespace std;
 
-long long power(int A, int B)
-{
-	int res = 1;
-
-	for (int i = 0; i < B; i++) {
-		res *= A;
-	}
-
-	return res;
-}
+const int MOD = 1000000007;
 
 int main(void)
 {
-	int A = 2;
-	int B = 10;
-	int C;
+    int n, k; cin >> n >> k;
 
-	cout << power(A, B);
+    cout << 4000000 % MOD;
 
-	return 0;
+    return 0;
 }
