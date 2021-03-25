@@ -17,6 +17,7 @@ int main(void)
 {
 	int A = 2;
 	int B = 10;
+	int C;
 
 	cout << power(A, B);
 
