@@ -2,34 +2,23 @@
 
 using namespace std;
 
-const int MOD = 1000;
-const int MAX = 5;
+const int MOD = 1000000007;
+const int MAX = 2;
 
 using ll = long long;
 using Matrix = struct {
-    int mat[MAX][MAX];
+    ll mat[MAX][MAX];
 };
 
 ll n, b;
 
-void io(Matrix& m, char c)
-{
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (c == 'i') cin >> m.mat[i][j];
-            else cout << m.mat[i][j] % MOD << " ";
-        }
-        if (c == 'o') cout << "\n";
-    }
-}
-
 Matrix operator*(const Matrix& a, const Matrix& b)
 {
     Matrix tmp;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+    for (int i = 0; i < MAX; i++) {
+        for (int j = 0; j < MAX; j++) {
             tmp.mat[i][j] = 0;
-            for (int k = 0; k < n; k++) {
+            for (int k = 0; k < MAX; k++) {
                 tmp.mat[i][j] += a.mat[i][k] * b.mat[k][j];
             }
             tmp.mat[i][j] %= MOD;
@@ -50,13 +39,17 @@ Matrix power(const Matrix& m, ll num)
 
 int main(void)
 {
-    cin >> n >> b;
+    cin >> n;
 
     Matrix m;
+    m.mat[0][0] = 1;
+    m.mat[0][1] = 1;
+    m.mat[1][0] = 1;
+    m.mat[1][1] = 0;
 
-    io(m, 'i');
-    m = power(m, b);
-    io(m, 'o');
+    m = power(m, n);
+    
+    cout << m.mat[0][1] % MOD;
 
     return 0;
 }
