@@ -1,134 +1,86 @@
 #include<iostream>
+#include<vector>
+#include<algorithm>
+#include<cmath>
+
 using namespace std;
 
-#define MAX_SIZE 50
-enum menu
+const int MAX = 100000;
+
+int n;
+using p = pair<int, int>;
+vector<p> ps(MAX);
+
+int power(int i)
 {
-    M_none, M_insert, M_delete, M_search, M_change, M_print, M_clear, M_exit
+    return i * i;
+}
+
+int dis(const p& p1, const p& p2)
+{
+    int x = p1.first - p2.first;
+    int y = p1.second - p2.second;
+    return power(x) + power(y);
+}
+
+int cmp_x(const p& p1, const p& p2)
+{
+    if (p1.first < p2.first) return true;
+    else return false;
 };
-typedef struct Student
-{
-    char name[MAX_SIZE];
-    char snum[MAX_SIZE];
-}STUDENT, * PSTUDENT;
 
-typedef struct node
+int cmp_y(const p& p1, const p& p2)
 {
-    STUDENT student;
-    node* pNext;
-}NODE, * PNODE;
+    if (p1.second < p2.second) return true;
+    else return false;
+};
 
-typedef struct list
+int closer(int l, int r)
 {
-    PNODE pb;
-    PNODE pe;
-    int idk;
-}LIST, * PLIST;
+    int n = r - l + 1;
+    if (n == 2) return dis(ps[l], ps[r]);
+    if (n == 3) {
+        return min({ dis(ps[l], ps[l + 1]), dis(ps[l + 1], ps[l + 2]), dis(ps[l], ps[r]) });
+    }
+    int mid = l + r / 2;
+    int ret = min(closer(0, mid), closer(mid + 1, r));
+    int line = ps[mid].first + ps[mid + 1].first / 2;
 
-void init(PLIST plist)
-{
-    plist->pb = NULL;
-    plist->pe = NULL;
-    plist->idk = 0;
+    vector<p> in;
+    in.reserve(n);
 
-}
-void Insert(PLIST plist)
-{
-    STUDENT stu;
-    cin >> stu.name >> stu.snum;
-    PNODE pNode = new NODE;
-    pNode->student = stu;
-    pNode->pNext = NULL;
-
-    if (plist->pb == NULL)
-        plist->pb = pNode;
-    else
-        plist->pe->pNext = pNode;
-    plist->pe = pNode;
-    plist->idk++;
-}
-void Delete(PLIST plist, const char name[MAX_SIZE])
-{
-    PNODE pNode = new NODE;//현재 노드를 담을 노드 동적할당
-    PNODE prevNode = new NODE;//이전 노드를 담을 노드 동적할당
-    pNode = plist->pb; //첫 번째 노드를 담았당
-    prevNode == NULL; //초기화
-
-    while (pNode != NULL)//삭제할 노드를 선택하자. name 이랑 일치하는지?
-    {
-        if (pNode->student.name == name) //현재 노드 (처음부터 시작)가 이름과 같다면??
-            break; //빤쓰런
-        else
-        {
-            prevNode = pNode; //이전 노드에 현재 노드를 담는당.
-            pNode = pNode->pNext; //현재 노드에 다음 노드를 연결.
+    for (int i = l; i < r; i++) {
+        if (power(line - ps[i].first) < ret) {
+            in.push_back(ps[i]);
         }
     }
-    //이제 삭제 시작
-    if (prevNode == NULL)//노드가 첫번째 일 때: plist->pb = pNode->pNext //노드를 그 다음노드로 바꾼당.
-    {
-        plist->pb = pNode->pNext;
-    }
-    else if (pNode->pNext == NULL) //다음이 비어있다면..//노드가 마지막에 있을 때: 이전 노드->pNext = NULL
-    {
-        prevNode->pNext = NULL;
-    }
-    else//노드가 중간에 있을 때: 이전노드->pNext를 pNode->pNext로 ... //이전노드를 어떻게 구할까. 다음 노드로 연결할 때 이전 노드를 저장하자..
-    {
-        prevNode->pNext = pNode->pNext;
-    }
-    delete pNode;//노드를 delete 한다.
-}
-void stu_print(PSTUDENT student)
-{
-    cout << student->name;
-    cout << student->snum;
-}
-void print(PLIST plist)
-{
-    PNODE pNode = plist->pb;
-    while (pNode != NULL)
-    {
-        stu_print(&pNode->student);
-        pNode = pNode->pNext;
-    }
-    cout << plist->idk;
-}
-int Showmenu()
-{
-    int a;
-    cout << "골라" << endl;
-    cout << "1.학생등록 2.삭재 3.찾기 4. 학번바꾸기? 5.전체출력 6. 전체삭제 7.종료" << endl;
-    cout << "입력 :";
-    cin >> a;
-    return a;
-}
 
-int main()
-{
-    LIST tlist;
+    sort(in.begin(), in.end(), cmp_y);
 
-    while (true)
-    {
-        int select = Showmenu();
-
-        if (select == M_exit)
-            break;
-
-        switch (select)
-        {
-        case M_insert:
-            break;
-        case M_delete:
-            break;
-        case M_search:
-            break;
-        case M_change:
-            break;
-        case M_print:
-            break;
-        case M_clear:
-            break;
+    int len = in.size();
+    for (int i = 0; i < len; i++) {
+        for (int j = i + 1; j < len; j++) {
+            if (power(in[i].second - in[j].second) >= ret) break;
+            else {
+                ret = min(ret, dis(in[i], in[j]));
+            }
         }
     }
+
+    return ret;
+}
+
+int main(void)
+{
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cin >> ps[i].first >> ps[i].second;
+    }
+
+    sort(ps.begin(), ps.begin() + n, cmp_x);
+
+    cout << closer(0, n - 1);
+
+    return 0;
 }
