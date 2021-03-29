@@ -1,63 +1,69 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<cmath>
 
 #define X first
 #define Y second
-#define MAX 1000000000000ll;
 
 using namespace std;
 
-typedef long long LL;
-typedef pair<LL, LL> PAIR;
+const int MAX = 100000;
 
 int n;
-PAIR point[500004];
+using p = pair<int, int>;
+p ps[MAX];
 
-LL square(LL i)
+int power(int i)
 {
     return i * i;
 }
 
-LL dist(PAIR a, PAIR b)
+int dis(const p& p1, const p& p2)
 {
-    return square(a.X - b.X) + square(a.Y - b.Y);
+    int x = p1.X - p2.X;
+    int y = p1.Y - p2.Y;
+    return power(x) + power(y);
 }
 
-bool op(PAIR a, PAIR b)
+bool cmp(const p& p1, const p& p2)
 {
-    if (a.Y != b.Y)
-        return a.Y < b.Y;
-    else
-        return a.X < b.X;
-}
+    if (p1.Y < p2.Y) return true;
+    else return false;
+};
 
-LL solve(int st, int en)
+int closest(int l, int r)
 {
-    if (en - st == 1)
-        return 200000000;
-    int mid = (st + en) / 2;
-    LL d = min(solve(0, mid), solve(mid + 1, en));
+    int n = r - l + 1;
+    if (n == 2) return dis(ps[l], ps[r]);
+    if (n == 3) {
+        return min({ dis(ps[l], ps[l + 1]), dis(ps[l + 1], ps[l + 2]), dis(ps[l], ps[r]) });
+    }
 
-    vector<PAIR> V;
-    LL line = point[mid].X;
+    int mid = (l + r) / 2;
+    int ret = min(closest(l, mid), closest(mid + 1, r));
 
-    for (int i = st; i < en; i++) {
-        if (square(point[i].X - line) <= d) {
-            V.push_back(point[i]);
+    vector<p> in;
+    in.reserve(n);
+    int line = (ps[mid].X + ps[mid + 1].X) / 2;
+
+    for (int i = l; i < r; i++) {
+        if (power(line - ps[i].X) < ret) {
+            in.push_back(ps[i]);
         }
     }
 
-    sort(V.begin(), V.end(), op);
+    sort(in.begin(), in.end(), cmp);
 
-    int len = V.size();
+    int len = in.size();
     for (int i = 0; i < len; i++) {
-        for (int j = i + 1; j < len && j < i + 7; j++) {
-            d = min(d, dist(V[i], V[j]));
+        for (int j = i + 1; j < len; j++) {
+            if (power(in[i].Y - in[j].Y) >= ret) break;
+            else ret = min(ret, dis(in[i], in[j]));
         }
     }
 
-    return d;
+    return ret;
 }
 
 int main(void)
@@ -69,12 +75,12 @@ int main(void)
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        cin >> point[i].X >> point[i].Y;
+        cin >> ps[i].X >> ps[i].Y;
     }
 
-    sort(point, point + n);
+    sort(ps, ps + n);
 
-    cout << solve(0, n - 1);
+    cout << closest(0, n - 1);
 
     return 0;
 }
