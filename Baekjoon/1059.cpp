@@ -20,23 +20,16 @@ int main(void)
 
     sort(v.begin(), v.end());
     for (int i = 1; i < L + 1; i++) {
-        if (v[i - 1] < n && n < v[i]) {
+        if (n < v[i]) {
             s = v[i - 1] + 1;
             e = v[i] - 1;
-            break;
-        }
-        if (v[i] == n) {
-            b = false;
+            if (v[i - 1] == n) b = false;
             break;
         }
     }
 
-    if (b) {
-        cout << (n - s) * (e - n + 1) + (e - n);
-    }
-    else {
-        cout << 0;
-    }
+    if (b) cout << (n - s) * (e - n + 1) + (e - n);
+    else cout << 0;
 
     return 0;
 }
