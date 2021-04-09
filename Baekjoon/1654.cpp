@@ -9,11 +9,11 @@ const int MAX = 10000;
 
 int k, n;
 vector<LL> lan(MAX);
-LL m, cnt, res;
+LL res;
 
 bool check(LL l)
 {
-    cnt = 0;
+    int cnt = 0;
     for (int i = 0; i < k; i++) {
         cnt += (lan[i] / l);
     }
@@ -36,6 +36,7 @@ int main(void)
 {
     cin >> k >> n;
 
+    LL m = 0;
     for (int i = 0; i < k; i++) {
         cin >> lan[i];
         m = max(m, lan[i]);
