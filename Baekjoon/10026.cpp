@@ -24,20 +24,7 @@ void visit(int y, int x)
     q.push(pair(y, x));
 }
 
-bool check(char c, char o, bool b)
-{
-    if (b) {
-        if (c == 'R' && (o == 'R' || o == 'G')) return true;
-    }
-    else {
-        if (c == 'R' && o == 'R') return true;
-        if (c == 'G' && o == 'G') return true;
-    }
-    if (c == 'B' && o == 'B') return true;
-    return false;
-}
-
-void search(bool b)
+void search()
 {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -50,7 +37,7 @@ void search(bool b)
                         int ny = node.py + d[k].py;
                         int nx = node.px + d[k].px;
                         if (ny >= 0 && nx >= 0 && ny < n && nx < n) {
-                            if (!visited[ny][nx] && check(s[i][j], s[ny][nx], b)) visit(ny, nx);
+                            if (!visited[ny][nx] && s[i][j] == s[ny][nx]) visit(ny, nx);
                         }
                     }
                 }
@@ -68,14 +55,20 @@ int main(void)
         cin >> s[i];
     }
 
-    search(false);
+    search();
     cout << res << ' ';
 
     memset(visited, false, sizeof(visited));
     res = 0;
 
-    search(true);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (s[i][j] == 'G') s[i][j] = 'R';
+        }
+    }
+
+    search();
     cout << res;
-    
+
     return 0;
 }
