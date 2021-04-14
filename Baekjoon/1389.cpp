@@ -1,5 +1,6 @@
 #include<iostream>
 #include<queue>
+#include<cstring>
 
 using namespace std;
 
@@ -7,28 +8,37 @@ const int MAX = 101;
 
 int n, m;
 int net[MAX][MAX];
+bool visited[MAX];
+int cnt[MAX];
+int tmp = MAX;
 queue<int> q;
-int res = 101;
 
-void BFS(int a, int b)
+void visit(int num)
 {
-    if (net[a][b]) return;
-    q = queue<int>();
-    q.push(a);
+    q.push(num);
+    visited[num] = true;
+}
+
+bool BFS(int num)
+{
+    visit(num);
     while (!q.empty()) {
         int user = q.front();
         q.pop();
         for (int i = 1; i <= n; i++) {
-            if (i != a && net[user][i]) {
-                q.push(i);
-                if (!net[a][i]) {
-                    net[a][i] = net[user][i] + 1;
-                    net[i][a] = net[a][i];
-                }
-                if (i == b) return;
+            if (!visited[i] && net[user][i]) {
+                cnt[i] = cnt[user] + 1;
+                visit(i);
             }
         }
     }
+    int sum = 0;
+    for (int i = 1; i <= n; i++) sum += cnt[i];
+    if (sum < tmp) {
+        tmp = sum;
+        return true;
+    }
+    else return false;
 }
 
 int main(void)
@@ -41,15 +51,11 @@ int main(void)
         net[b][a] = 1;
     }
 
+    int res;
     for (int i = 1; i <= n; i++) {
-        int tmp = 0;
-        for (int j = 1; j <= n; j++) {
-            if (i != j) {
-                BFS(i, j);
-                tmp += net[i][j];
-            }
-        }
-        res = min(res, tmp);
+        if (BFS(i)) res = i;
+        memset(visited, false, sizeof(visited));
+        memset(cnt, 0, sizeof(cnt));
     }
 
     cout << res;

@@ -1,65 +1,100 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cmath>
+#include<iostream>
+#include<queue>
 
 using namespace std;
 
-int Compare(const void* num1, const void* num2)
+const int MAX = 101;
+
+int n, m;
+int net[MAX][MAX];
+int d[MAX][MAX];
+queue<int> q;
+int res = 101;
+int test;
+
+/*
+void BFS(int a, int b)
 {
-    int a = *(int*)num1;
-    int b = *(int*)num2;
-    unsigned int Asize = to_string(a).size() - 1;
-    unsigned int Bsize = to_string(b).size() - 1;
-    while (true)
-    {
-        if (a / pow(10, Asize) > b / pow(10, Bsize))
-            return -1;
-        else if (a / pow(10, Asize) < b / pow(10, Bsize))
-            return 1;
-        else
-        {
-            if (Asize == 0 && Bsize == 0)
-                return 0;
-            if (Asize > 0)
-            {
-                a = a % (int)pow(10, Asize);
-                Asize--;
-            }
-            if (Bsize > 0)
-            {
-                b = b % (int)pow(10, Bsize);
-                Bsize--;
+    if (net[a][b]) return;
+    q = queue<int>();
+    q.push(a);
+    while (!q.empty()) {
+        int user = q.front();
+        q.pop();
+        for (int i = 1; i <= n; i++) {
+            if (i != a && net[user][i]) {
+                q.push(i);
+                if (!net[a][i]) {
+                    net[a][i] = net[user][i] + 1;
+                    net[i][a] = net[a][i];
+                }
+                if (i == b) return;
             }
         }
     }
 }
+*/
 
-string solution(vector<int> numbers) {
-    for (int i = numbers.size() - 1; i > 0; i--) {
-        for (int j = 0; j < i; j++) {
-            qsort(&numbers[0], numbers.size(), sizeof(int), Compare);
+int main(void)
+{
+    cin >> n >> m;
+
+    for (int i = 0; i < m; i++) {
+        int a, b; cin >> a >> b;
+        net[a][b] = 1;
+        net[b][a] = 1;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (i != j && net[i][j] != 1) {
+                net[i][j] = 10000000;
+                test++;
+            }
+            d[i][j] = net[i][j];
         }
     }
 
-
-    string answer = "";
-    if (numbers[0] == 0)
-        answer = "0";
-    else {
-        for (int number : numbers)
-            answer += to_string(number);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            for (int k = 1; k <= n; k++) {
+                if (d[j][i] + d[i][k] < d[j][k]) {
+                    d[j][k] = d[j][i] + d[i][k];
+                    test++;
+                }
+            }
+        }
+        for (int j = 1; j <= n; j++) {
+            for (int k = 1; k <= n; k++) {
+                cout << d[i][j] << ' ';
+            }
+        }
     }
-    return answer;
-}
 
-int main()
-{
-    int t; cin >> t;
-    vector<int> nums(t);
-    for (int i = 0; i < t; i++) {
-        cin >> nums[i];
+    /*
+    for (int i = 1; i <= n; i++) {
+        int tmp = 0;
+        for (int j = 1; j <= n; j++) {
+            if (i != j) {
+                BFS(i, j);
+                tmp += net[i][j];
+            }
+        }
+        res = min(res, tmp);
     }
-    solution(nums);
+    */
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            cout << d[i][j] << ' ';
+        }
+        cout << endl;
+    }
+
+    cout << res;
+
+    cout << endl;
+    cout << test;
+
     return 0;
 }
