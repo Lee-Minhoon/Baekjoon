@@ -28,7 +28,7 @@ void MinHeap::push(int data)
 
     int child = idx;
     int parent = child / 2;
-    while (child > 1 && heap[child] > heap[parent]) {
+    while (child > 1 && heap[child] < heap[parent]) {
         swap(&heap[child], &heap[parent]);
         child = parent;
         parent = child / 2;
@@ -45,7 +45,7 @@ int MinHeap::pop()
     int child = parent * 2;
     child = select(child);
 
-    while (child <= idx && heap[parent] < heap[child] ) {
+    while (child <= idx && heap[parent] > heap[child]) {
         swap(&heap[parent], &heap[child]);
         parent = child;
         child = child * 2;
@@ -64,7 +64,7 @@ void MinHeap::swap(int* a, int* b)
 
 int MinHeap::select(int child)
 {
-    if (child + 1 <= idx) child = (heap[child] > heap[child + 1]) ? child : child + 1;
+    if (child + 1 <= idx) child = (heap[child] < heap[child + 1]) ? child : child + 1;
     return child;
 }
 
@@ -77,7 +77,7 @@ int main(void)
     MinHeap h;
 
     int n; cin >> n;
-    
+
     while (n--) {
         int c; cin >> c;
         if (c == 0) {
