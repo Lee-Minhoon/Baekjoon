@@ -1,18 +1,12 @@
-#include<stdio.h>
+#include<iostream>
 
 using namespace std;
 
-int sum(int i)
-{
-    if (i <= 1) return i;
-    return sum(i - 1) + sum(i - 2);
-}
-
 int main(void)
 {
-    int a = 5;
+    cout << 1 << 'as';
 
-    printf("%d", sum(a));
+    cout << 2;
 
     return 0;
 }
