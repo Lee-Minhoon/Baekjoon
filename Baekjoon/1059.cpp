@@ -20,10 +20,10 @@ int main(void)
 
     sort(v.begin(), v.end());
     for (int i = 1; i < L + 1; i++) {
-        if (n < v[i]) {
+        if (n == v[i]) b = false;
+        else if (n < v[i]) {
             s = v[i - 1] + 1;
             e = v[i] - 1;
-            if (v[i - 1] == n) b = false;
             break;
         }
     }
