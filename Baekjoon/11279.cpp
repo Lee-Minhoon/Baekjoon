@@ -4,7 +4,7 @@ using namespace std;
 
 const int MAX = 100001;
 
-class MinHeap
+class MaxHeap
 {
 private:
     int heap[MAX];
@@ -17,12 +17,12 @@ public:
     int select(int child);
 };
 
-int MinHeap::size()
+int MaxHeap::size()
 {
     return idx;
 }
 
-void MinHeap::push(int data)
+void MaxHeap::push(int data)
 {
     heap[++idx] = data;
 
@@ -35,7 +35,7 @@ void MinHeap::push(int data)
     }
 }
 
-int MinHeap::pop()
+int MaxHeap::pop()
 {
     int ret = heap[1];
 
@@ -45,7 +45,7 @@ int MinHeap::pop()
     int child = parent * 2;
     child = select(child);
 
-    while (child <= idx && heap[parent] < heap[child] ) {
+    while (child <= idx && heap[parent] < heap[child]) {
         swap(&heap[parent], &heap[child]);
         parent = child;
         child = child * 2;
@@ -55,14 +55,14 @@ int MinHeap::pop()
     return ret;
 }
 
-void MinHeap::swap(int* a, int* b)
+void MaxHeap::swap(int* a, int* b)
 {
     int tmp = *a;
     *a = *b;
     *b = tmp;
 }
 
-int MinHeap::select(int child)
+int MaxHeap::select(int child)
 {
     if (child + 1 <= idx) child = (heap[child] > heap[child + 1]) ? child : child + 1;
     return child;
@@ -74,10 +74,10 @@ int main(void)
     cin.tie(NULL);
     cout.tie(NULL);
 
-    MinHeap h;
+    MaxHeap h;
 
     int n; cin >> n;
-    
+
     while (n--) {
         int c; cin >> c;
         if (c == 0) {
