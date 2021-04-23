@@ -1,31 +1,16 @@
-#include<iostream>
-#include<vector>
-#include<algorithm>
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
 
-using namespace std;
 
-int n, m;
-
-int arr[20000001];
 
 int main(void)
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    printf("%-8.2f\n", 200.2);
+    printf("%8.2f", 200.2);
 
-    int n; cin >> n;
-    for (int i = 0; i < n; i++) {
-        int t; cin >> t;
-        arr[t + 10000000]++;
-    }
-
-    int m; cin >> m;
-    for (int i = 0; i < m; i++) {
-        int t; cin >> t;
-        if (arr[t + 10000000]) cout << 1 << ' ';
-        else cout << 0 << ' ';
-    }
-
+    char input[50];
+    scanf("%s", input);
+    printf("%.5s\n", input);
+    printf("%5.3s\n", input);
     return 0;
 }
