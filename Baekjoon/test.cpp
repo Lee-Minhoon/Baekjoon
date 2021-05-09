@@ -1,49 +1,54 @@
-#include<iostream>
-#include<queue>
+#include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
-const int MAX = 100;
-
-struct Loc {
-    int h, m, n;
-    Loc(int h, int m, int n) : h(h), m(m), n(n) {}
-};
-
-int m, n, h;
-int map[MAX][MAX][MAX];
-bool visited[MAX][MAX][MAX];
-queue<Loc> q;
-Loc Direction[6] = {
-    {1, 0, 0},
-    {-1, 0, 0},
-    {0, 1, 0},
-    {0, 0, 1},
-    {0, -1, 0},
-    {0, 0, -1}
-};
-
-void input(void)
+int search(int cacheSize, vector<string>& cache, string s)
 {
-    for (int i = 0; i < h; i++) {
-        for (int j = 0; j < n; j++) {
-            for (int k = 0; k < m; k++) {
-                cin >> map[i][j][k];
-                if (map[i][j][k] == 1) {
-                    q.push({i, j, k});
-                    visited[i][j][k] = true;
-                }
-            }
+    int t = cache.size();
+    if (t == 0) {
+        cache.push_back(s);
+        return 5;
+    }
+    vector<string>::iterator it;
+    for (it = cache.begin(); it < cache.end(); it++) {
+        if (s == *it) {
+            cache.erase(it);
+            cache.insert(cache.begin(), s);
+            return 1;
         }
     }
+    if (t >= cacheSize) {
+        cache.push_back(s);
+        cache.erase(cache.begin());
+    }
+    else {
+        cache.push_back(s);
+    }
+    return 5;
 }
 
+int solution(int cacheSize, vector<string> cities) {
+    int answer = 0;
+    vector<string> cache;
 
-int main(void)
+    for (auto i : cities) {
+        i = tolower(i);
+        answer += search(cacheSize, cache, i);
+        vector<string>::iterator it;
+        for (it = cache.begin(); it < cache.end(); it++) {
+            cout << *it << ' ';
+        }
+        cout << endl;
+    }
+
+    return answer;
+}
+
+int main()
 {
-    cin >> m >> n >> h;
+    vector<string> s = { "Jeju", "Pangyo", "NewYork", "newyork" };
 
-    cout << Direction[0].h << endl;
-
-    return 0;
+    cout << solution(2, s);
 }
