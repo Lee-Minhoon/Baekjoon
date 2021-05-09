@@ -34,7 +34,10 @@ int solution(int cacheSize, vector<string> cities) {
     vector<string> cache;
 
     for (auto i : cities) {
+<<<<<<< HEAD
         i = tolower(i);
+=======
+>>>>>>> 197d00f80d1a198a2d2176bd7dc364c5c71ea412
         answer += search(cacheSize, cache, i);
         vector<string>::iterator it;
         for (it = cache.begin(); it < cache.end(); it++) {
