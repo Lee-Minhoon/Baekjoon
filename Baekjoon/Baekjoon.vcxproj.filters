@@ -15,7 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="2206.cpp">
+<<<<<<< HEAD
+    <ClCompile Include="1010.cpp">
+=======
+    <ClCompile Include="test.cpp">
+>>>>>>> 197d00f80d1a198a2d2176bd7dc364c5c71ea412
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
