@@ -1,34 +1,31 @@
 #include <iostream>
 
+using namespace std;
+
+void star(int i, int j, int num)
+{
+	if (i / num % 3 == 1 && j / num % 3 == 1) {
+		cout << ' ';
+	}
+	else {
+		if (num == 1) {
+			cout << '*';
+		}
+		else {
+			star(i, j, num / 3);
+		}
+	}
+}
+
 int main(void)
 {
-	int n;
-	std::cin >> n;
+	int N; cin >> N;
 
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			int temp_i = i;
-			int temp_j = j;
-			bool check = false;
-			while (true)
-			{
-				if (temp_i % 3 == 1 && temp_j % 3 == 1)
-				{
-					check = true;
-					break;
-				}
-				else
-				{
-					temp_i /= 3;
-					temp_j /= 3;
-					if (temp_i == 0 && temp_j == 0) break;
-				}
-			}
-			check ? std::cout << " " : std::cout << "*";
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			star(i, j, N / 3);
 		}
-		std::cout << "\n";
+		cout << '\n';
 	}
 
 	return 0;
