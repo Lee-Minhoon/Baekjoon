@@ -11,16 +11,13 @@ void star(int i, int j, int num, int mid)
 	if (num == 3) {
 		rleft++; rright--;
 	}
-	// »ï°¢Çü ¹Û
+
 	if (j < left || j > right) cout << ' ';
-	// °ø¹é »ï°¢Çü
 	else if (dis >= num / 2 && j >= rleft && j <= rright) cout << ' ';
-	// ¾ç ºøº¯
 	else if (j == left || j == right) cout << '*';
 	else {
 		if (num == 3) cout << '*';
 		else {
-			// mid°ª °»½Å
 			if (dis >= num / 2 && j < mid) mid -= (num / 2);
 			else if (dis >= num / 2 && j > mid) mid += (num / 2);
 			star(i, j, num / 2, mid);
@@ -30,6 +27,10 @@ void star(int i, int j, int num, int mid)
 
 int main(void)
 {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
 	int N; cin >> N;
 
 	for (int i = 0; i < N; i++) {
