@@ -5,6 +5,11 @@ using namespace std;
 
 int main(void)
 {
-	cout << sum(1, 4);
+	char c = 3; // char 숫자 == 어?? 문자아닙니까? 어떻게 보면 숫자라 볼수있지
+
+	printf("%d", c);
+
+
+
 	return 0;
 }
