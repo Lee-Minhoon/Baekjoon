@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 using namespace std;
 
@@ -35,7 +36,7 @@ int DP(int start, int end)
         }
     }
 
-    return cache[start][end] = psum[end] - psum[start - 1];
+    return cache[start][end] += psum[end] - psum[start - 1];
 }
 
 int main(void)
@@ -43,6 +44,7 @@ int main(void)
     int T; cin >> T;
 
     while (T--) {
+        memset(cache, 0, sizeof(cache));
         int K; cin >> K;
         for (int i = 1; i <= K; i++) {
             cin >> cost[i];
