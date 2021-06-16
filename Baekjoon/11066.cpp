@@ -27,7 +27,7 @@ int DP(int start, int end)
     for (int mid = start; mid < end; mid++) {
         int left = DP(start, mid);
         int right = DP(mid + 1, end);
-        if (cache[start][end]) {
+        if (!cache[start][end]) {
             cache[start][end] = left + right;
         }
         else {
@@ -48,7 +48,7 @@ int main(void)
             cin >> cost[i];
             psum[i] = psum[i - 1] + cost[i];
         }
-        cout << DP(1, K);
+        cout << DP(1, K) << '\n';
     }
 
     return 0;
