@@ -17,6 +17,7 @@ int DFS(int y, int x)
     }
 
     if (cache[y][x] == -1) {
+        cache[y][x] = 0;
         for (int i = 0; i < 4; i++) {
             int ny = y + direction[i].first;
             int nx = x + direction[i].second;
