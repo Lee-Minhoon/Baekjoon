@@ -12,10 +12,12 @@ int cache[MAX][MAX];
 
 int DFS(int y, int x)
 {
+    // 기저 사례 (목적지에 도달)
     if (y == M && x == N) {
         return 1;
     }
 
+    // 방문하지 않은 지점이라면 계속 탐색
     if (cache[y][x] == -1) {
         cache[y][x] = 0;
         for (int i = 0; i < 4; i++) {
@@ -27,6 +29,7 @@ int DFS(int y, int x)
         }
     }
 
+    // 방문한 곳이라면 해당 좌표에서 목적지까지 도달할 수 있는 경로의 개수 반환
     return cache[y][x];
 }
 

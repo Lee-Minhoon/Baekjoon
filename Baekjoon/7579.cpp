@@ -4,10 +4,8 @@ using namespace std;
 
 const int MAX = 100;
 
-int N, M;
-int memory[MAX + 1];
-int cost[MAX + 1];
-int total;
+int N, M, total;
+int memory[MAX + 1], cost[MAX + 1];
 int cache[MAX * MAX + 1];
 
 int main(void)
