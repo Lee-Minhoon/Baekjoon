@@ -5,14 +5,12 @@ using namespace std;
 
 void move(int n, int start, int stop, int dst)
 {
-    if (n == 1) {
-        cout << start << " " << dst << "\n";
+    if (n == 0) {
+        return;
     }
-    else {
-        move(n - 1, start, dst, stop);
-        cout << start << " " << dst << "\n";
-        move(n - 1, stop, start, dst);
-    }
+    move(n - 1, start, dst, stop);
+    cout << start << " " << dst << "\n";
+    move(n - 1, stop, start, dst);
 }
 
 int main(void)
